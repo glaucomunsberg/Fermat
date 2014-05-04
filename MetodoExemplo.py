@@ -1,4 +1,4 @@
-class ModeloExemplo:
+class MetodoExemplo:
 	__matriz = None
 	__log = None
 
@@ -8,7 +8,7 @@ class ModeloExemplo:
 	
 	def preparaDados(self,matriz):
 		#Executa
-		self.__log.write('Preparando dados em')
+		self.__log.write('Preparando dados em '+self.__class__.__name__)
 		self.__matriz = matriz
 
 	def executaMetodo(self):
