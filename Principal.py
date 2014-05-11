@@ -1,4 +1,4 @@
-import sys, time, datetime, numpy, os
+import sys, time, datetime, os
 
 from Library import Library
 from Metodo import MetodoExemplo
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         print '=====================Fermat====================='
         print 'Option - Description'
         print '     1 - Read the file and solve the problem'
-        print '     2 - Solve the problem example'
+        print '     2 - Solve the problem propose'
         print '     3 - About'
         print '     0 - Exit' 
         print ''  
@@ -48,7 +48,7 @@ if __name__ == "__main__":
                 print 'Error: '+str(msg)
                 exit(1)
         elif option == 2:
-            lib.setFromMatrix([[4,-1,0,-1,0,0,0],[-1,4,-1,0,-1,0],[0,-1,4,0,0,-1],[-1,0,0,4,-1,0],[0,-1,0,-1,4,-1],[0,0,-1,0,-1,4]])
+            lib.setFromMatrix([[4.0,-1.0,0.0,-1.0,0.0,0.0],[-1.0,4.0,-1.0,0.0,-1.0,0.0],[0.0,-1.0,4.0,0.0,0.0,-1.0],[-1.0,0.0,0.0,4.0,-1.0,0.0],[0.0,-1.0,0.0,-1.0,4.0,-1.0],[0.0,0.0,-1.0,0.0,-1.0,4.0]])
             
         elif option == 3:
             print 'Biblioteca desenvolvida para solucionaro o problema'
@@ -68,6 +68,14 @@ if __name__ == "__main__":
             exit()
 
         log.flush()
+
         if option == 1 or option == 2:
-            lib.isSolvable()
+            
+            if lib.isSolvable() == 1:
+                print 'A matriz tem solucao'
+            else:
+                print 'A matriz nao possui solucao'
+                exit(0)
+
+            print 'Maior elemento na matriz: '+str(lib.findTheBiggest())
         raw_input('Press Any key to continue')
