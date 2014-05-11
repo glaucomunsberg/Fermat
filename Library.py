@@ -1,4 +1,8 @@
-import sys, os
+#
+# Esta biblioteca foi criada para solucionar o problema 
+#	disponibilizado pela Prof. Aline para o trabalho de
+#	Calculo Numerico/UFPel/2014-1
+import sys, os, numpy
 class Library:
 	__matrix = None
 	__log = None
@@ -11,31 +15,32 @@ class Library:
 	#
 	# Metodo que verifica que a matriz 
 	#	esta com a parte inferior zerada
-	def isSolvable(self,matrix):
+	def isSolvable(self):
 		self.__log.write('Preparing data in Library->isSolvable\n')
 		j = 0
 		aux = 1
 
-		for i in range(len(mat)):
+		for i in range(len(self.__matrix)):
 			while j < i:
-				if mat[i][j] != 0.0:
+				if self.__matrix.item(i,j) != 0.0:
 					aux = 0
 				j = j + 1
 			if aux == 1:
-				if mat[i][j] == 0.0:
+				print 'val: '+str(self.__matrix.item(i,j))
+				if self.__matrix.item(i,j) == 0.0:
 					aux = -1
 		return aux
 	
 	#
 	# Procura o mair valor dentro da matriz
-	def findTheBiggest(self, matrix):
+	def findTheBiggest(self):
 		self.__log.write('Preparing data in Library->findTheBigest\n')
 		bigest = 0
 		bigestIndice = i
 
-		while i < len(mat):
-			if abs(mat[i][j]) > bigest:
-				bigest = matrix[i][j]
+		while i < len(__matrix):
+			if abs(__matrix.item((i,j))) > bigest:
+				bigest = matrix.item((i,j))
 				bigestIndice = i
 			i += 1
 		return bigestIndice
@@ -45,5 +50,18 @@ class Library:
 	#	um espaco e quadratica
 	def readFile(self, path):
 		self.__log.write('Preparing data in Library->readFile\n')
-		arq = open('exemplo.txt')
-		return [[float(x) for x in line.split()] for line in arq]
+		
+		try:
+			arq = open(path)
+			matrix = [[float(x) for x in line.split(' ')] for line in arq]
+			self.setFromMatrix(matrix)
+			self.__log.write(str(__matrix))
+		except Exception, msg:
+			self.__log.write('Error: '+str(msg))
+			return None
+		return 1
+
+	#
+	# Le uma matriz normal e a seta no formato do numPy
+	def setFromMatrix(self, matrix):
+		self.__matrix = numpy.matrix(matrix)
