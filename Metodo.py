@@ -1,23 +1,7 @@
 from Auxiliar import Auxiliar
 from numpy.linalg import norm
+from prettytable import *
 
-class MetodoExemplo:
-	__matriz = None
-	__log = None
-
-	def __init__(self, log):
-		self.__log = log
-		self.__log.write('Class Init: Modelo\n')
-	
-	def preparaDados(self,matriz):
-		#Executa
-		self.__log.write('Preparing data in '+self.__class__.__name__+'\n')
-		self.__matriz = matriz
-
-	def executaMetodo(self):
-		#Executa
-		'Executed'
-		
 #Methods codes
 #euler constant
 euler = 2.71828
@@ -38,18 +22,21 @@ def signal(x):
         return +1
 
 def bissecao():
-
+    print 'Bissecao'
     iterations = 1
-    MAX_iterations = 20
     MIN_error = 0.00001
 
     a = 0.0
     b = 3.0
     c = 0.0
+    x = PrettyTable()
+
     print "Iteration\ta\t\tb\t\tc\t\tf(c)"
-    while 1: # iterations ≤ MAX_iterations: # limit iterations to prevent infinite loop
+    x.field_names = ['Interation','a','b','c', 'f(c)']
+
+    while 1: # iterations <=MAX_iterations: # limit iterations to prevent infinite loop
         c = (a + b)/2 # new midpoint
-        print iterations,"\t\t",a,"\t",b,"\t",c,"\t",f(c)
+        x.add_row([iterations,a,b,c, f(c)])
         if f(c) == 0 or ((b - a)/2) < MIN_error: # solution found
             break;
         iterations+=1 # increment step counter
@@ -57,32 +44,37 @@ def bissecao():
             a = c
         else:
             b = c
+    print x
 			
 def posicao_falsa():
         #   s,t: endpoints of an interval where we search
         #   e: half of upper bound for relative error
         #   m: maximal number of iterations
         
+        print 'Posicao Falsa'
         r = 0.0
         fr = 0.0
         n = 1
         m = 20
         e = 0.000005
-        s = 0
-        t = 5
+        s = 0.0
+        t = 5.0
         side=0
         
         # starting values at endpoints of interval
         fs = f(s);
         ft = f(t);
         
-        while n < m:
+        table = PrettyTable()
+        table.field_names = ['Interations','Interval Inferior (s)','Interval Superior(t)', 'resposta (r)' ,'f(s)','f(t)','f(r)','error']
+
+        while 1:
             r = (fs*t - ft*s) / (fs - ft)
             if (abs(t-s) < e*abs(t+s)):
                 break
             fr = f(r)
             
-            print r
+            table.add_row([n,s,t,r,fs,ft,fr,abs(t-s)])
             
             if (fr * ft > 0):
                 #  fr and ft have same sign, copy r to t
@@ -100,22 +92,29 @@ def posicao_falsa():
                 else:
                      # fr * f_ very small (looks like zero)
                      break
+            n+=1
+        print table
 
 #need to be teste with extreme urgency
 def ponto_fixo():
+    print 'Ponto Fixo'
     x0 = 0.0
-    tol=10e-5
+    tol=0.00001
     maxiter=100
-    e = 1
+    e = 1.0
     itr = 0
+    table = PrettyTable()
+    table.field_names = ['iterations','x','Error']
     while(e > tol and itr < maxiter):
-        x = f(x0)      # fixed point equation
+        x = x0-(f(x0)/df(x0))     # fixed point equation
         e = norm(x0-x) # error at the current step
         x0 = x
-		print x
+        table.add_row([itr,x,e])
         itr = itr + 1
+    print table
 		
 def newton_raphson():
+    print 'NewTon Raphson'
     #These choices depend on the problem being solved
     x0 = 1                      #The initial value
     tolerance = 0.0000001       #7 digit accuracy is desired
@@ -139,12 +138,18 @@ def newton_raphson():
         x0 = x1                                           #Update x0 to start the process again    
 		
 def secante():
+    print 'Scante'
+    table = PrettyTable()
+    table.field_names = ['Interations','Answer','Error']
     x0=0.0;
     x1=1.0;
+    interation=0
     tolerance = 0.0000001
     while ((x1-x0) > tolerance):
         x2 = x1 - (f(x1))*((x1 - x0)/(f(x1) - f(x0)))
-        print x2;
+        table.add_row([interation,x2,(x1-x0)])
         x0 = x1
         x1 = x2
+        interation+=1
+    print table
               

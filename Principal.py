@@ -1,7 +1,7 @@
 import sys, time, datetime, os
 
 from Library import Library
-from Metodo import MetodoExemplo
+from Metodo import *
 
 if __name__ == "__main__":
     firstTime = False
@@ -71,11 +71,8 @@ if __name__ == "__main__":
 
         if option == 1 or option == 2:
             
-            if lib.isSolvable() == 1:
-                print 'A matriz tem solucao'
-            else:
-                print 'A matriz nao possui solucao'
-                exit(0)
-
-            print 'Maior elemento na matriz: '+str(lib.findTheBiggest())
+            bissecao()
+            ponto_fixo()
+            posicao_falsa()
+            secante()
         raw_input('Press Any key to continue')
