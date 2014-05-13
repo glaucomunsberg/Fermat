@@ -136,4 +136,15 @@ def newton_raphson():
         if(abs(x1 - x0)/abs(x1) < tolerance):             #If the result is within the desired tolerance
             break;                                        #Done, so leave the loop
      
-        x0 = x1                                           #Update x0 to start the process again                  
+        x0 = x1                                           #Update x0 to start the process again    
+		
+def secante():
+    x0=0.0;
+    x1=1.0;
+    tolerance = 0.0000001
+    while ((x1-x0) > tolerance):
+        x2 = x1 - (f(x1))*((x1 - x0)/(f(x1) - f(x0)))
+        print x2;
+        x0 = x1
+        x1 = x2
+              
