@@ -26,6 +26,10 @@ euler = 2.71828
 def f(t):
     return 70*pow(euler,(-1.5*t))+2.5*pow(euler,(-0.075*t))-9
 
+#return t in function of the derivative function of f
+def df(t):
+    return -105*pow(euler,(-1.5*t)) - 0.1875*pow(euler,(-0.075*t))
+	
 #return the numbers signal
 def signal(x):
     if x<0:
@@ -110,3 +114,26 @@ def ponto_fixo():
         x0 = x
 		print x
         itr = itr + 1
+		
+def newton_raphson():
+    #These choices depend on the problem being solved
+    x0 = 1                      #The initial value
+    tolerance = 0.0000001       #7 digit accuracy is desired
+    epsilon = 10^(-14)          #Don't want to divide by a number smaller than this
+    
+    while 1:
+        y = f(x0)
+        yprime = df(x0)
+     
+        if(abs(yprime) < epsilon):                        #Don't want to divide by a number too small
+            print "WARNING: denominator is too small"
+            break                                         #Leave the loop
+    
+        x1 = x0 - y/yprime                                #Do Newton's computation
+        
+        print x1
+        
+        if(abs(x1 - x0)/abs(x1) < tolerance):             #If the result is within the desired tolerance
+            break;                                        #Done, so leave the loop
+     
+        x0 = x1                                           #Update x0 to start the process again                  
