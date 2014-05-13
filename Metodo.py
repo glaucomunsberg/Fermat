@@ -52,4 +52,46 @@ def bissecao():
             a = c
         else:
             b = c
-
+			
+def posicao_falsa():
+        #   s,t: endpoints of an interval where we search
+        #   e: half of upper bound for relative error
+        #   m: maximal number of iterations
+        
+        r = 0.0
+        fr = 0.0
+        n = 1
+        m = 20
+        e = 0.000005
+        s = 0
+        t = 5
+        side=0
+        
+        # starting values at endpoints of interval
+        fs = f(s);
+        ft = f(t);
+        
+        while n < m:
+            r = (fs*t - ft*s) / (fs - ft)
+            if (abs(t-s) < e*abs(t+s)):
+                break
+            fr = f(r)
+            
+            print r
+            
+            if (fr * ft > 0):
+                #  fr and ft have same sign, copy r to t
+                t = r; ft = fr
+                if (side==-1):
+                 fs /= 2
+                side = -1
+            else:
+                if (fs * fr > 0):
+                    # fr and fs have same sign, copy r to s
+                    s = r;  fs = fr
+                    if (side==+1):
+                        ft /= 2
+                    side = +1
+                else:
+                     # fr * f_ very small (looks like zero)
+                     break
