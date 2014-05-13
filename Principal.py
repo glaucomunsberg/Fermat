@@ -25,14 +25,14 @@ if __name__ == "__main__":
         os.system('clear')
         print '=====================Fermat====================='
         print 'Option - Description'
-        print '     1 - Read the file and solve the problem'
-        print '     2 - Solve the problem propose'
+        print '     1 - Solve reading the file problem'
+        print '     2 - Solve the problem example'
         print '     3 - About'
         print '     0 - Exit' 
         print ''  
-        option = 10
+        option = -1
 
-        while( option !=  1 and option != 2 and option != 0 and option != 3):
+        while( option < 0  and option < 3):
             try:
                 option = int(raw_input('Your Option: '))
             except Exception,msg:
@@ -52,13 +52,13 @@ if __name__ == "__main__":
             
         elif option == 3:
             print 'Biblioteca desenvolvida para solucionaro o problema'
-            print ' proposto na  Aula de Calculo Numerico. Para  saber'
-            print ' mais sobre o trabalho, por favor, acesse Ava/UFPel'
+            print '     proposto na  Aula de Calculo Numerico. Para  saber'
+            print '     mais sobre o trabalho, por favor, acesse Ava/UFPel'
             print ''
             print 'Integrantes:'
-            print ' Glauco Roberto'
-            print ' Guilherme Cousin'
-            print ' Gustavo Lima'
+            print '     Glauco Roberto'
+            print '     Guilherme Cousin'
+            print '     Gustavo Lima'
         elif option == 0:
             print '=====================End====================='
             optionMenu = True
@@ -70,9 +70,40 @@ if __name__ == "__main__":
         log.flush()
 
         if option == 1 or option == 2:
+            os.system('clear')
+            print '================Metodos Possiveis==============='
+            print ' Zero de Funcoes'
+            print '     1 - Bisscao'
+            print '     2 - Ponto Fixo'
+            print '     3 - Posicao Falsa'
+            print '     4 - Secante'
+            print '     5 - Newton Raphson'
+            print ''
+            print ' Sistemas'
+            print  '    6 - '
+            print ''
+            print '     10 - All'
+            print '     0 - Voltar'
+            optionMetodo = raw_input('Your Option: ')
             
-            bissecao()
-            ponto_fixo()
-            posicao_falsa()
-            secante()
+            if optionMetodo == 0:
+                os.system('clear')
+            elif optionMetodo == 1:
+                bissecao()
+            elif optionMetodo == 2:
+                ponto_fixo()
+            elif optionMetodo == 3:
+                posicao_falsa()
+            elif optionMetodo == 4:
+                secante()
+            elif optionMetodo == 5:
+                newton_raphson()
+            elif optionMetodo == 10:
+                bissecao()
+                onto_fixo()
+                posicao_falsa()
+                secante()
+                newton_raphson()
+            else:
+                print 'Something is wrong!'
         raw_input('Press Any key to continue')

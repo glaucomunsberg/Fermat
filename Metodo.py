@@ -4,7 +4,7 @@ from prettytable import *
 
 #Methods codes
 #euler constant
-euler = 2.71828
+euler = 2.718281828459
 
 #return t in function of f
 def f(t):
@@ -30,8 +30,6 @@ def bissecao():
     b = 3.0
     c = 0.0
     x = PrettyTable()
-
-    print "Iteration\ta\t\tb\t\tc\t\tf(c)"
     x.field_names = ['Interation','a','b','c', 'f(c)']
 
     while 1: # iterations <=MAX_iterations: # limit iterations to prevent infinite loop
@@ -114,11 +112,14 @@ def ponto_fixo():
     print table
 		
 def newton_raphson():
-    print 'NewTon Raphson'
+    print 'Newton Raphson'
     #These choices depend on the problem being solved
     x0 = 1                      #The initial value
     tolerance = 0.0000001       #7 digit accuracy is desired
     epsilon = 10^(-14)          #Don't want to divide by a number smaller than this
+    table = PrettyTable()
+    table.field_names = ['Interations', 'Error', 'F(x n)','F(x n+1)']
+    interation=0
     
     while 1:
         y = f(x0)
@@ -130,13 +131,15 @@ def newton_raphson():
     
         x1 = x0 - y/yprime                                #Do Newton's computation
         
-        print x1
+        table.add_row([interation,abs(x1-x0),x0, x1])
         
         if(abs(x1 - x0)/abs(x1) < tolerance):             #If the result is within the desired tolerance
             break;                                        #Done, so leave the loop
-     
-        x0 = x1                                           #Update x0 to start the process again    
-		
+        x0 = x1                                           #Update x0 to start the process again  
+        interation+=1  
+	
+    print table
+
 def secante():
     print 'Scante'
     table = PrettyTable()
