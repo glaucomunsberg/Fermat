@@ -1,4 +1,5 @@
 from Auxiliar import Auxiliar
+from numpy.linalg import norm
 
 class MetodoExemplo:
 	__matriz = None
@@ -95,3 +96,17 @@ def posicao_falsa():
                 else:
                      # fr * f_ very small (looks like zero)
                      break
+
+#need to be teste with extreme urgency
+def ponto_fixo():
+    x0 = 0.0
+    tol=10e-5
+    maxiter=100
+    e = 1
+    itr = 0
+    while(e > tol and itr < maxiter):
+        x = f(x0)      # fixed point equation
+        e = norm(x0-x) # error at the current step
+        x0 = x
+		print x
+        itr = itr + 1
