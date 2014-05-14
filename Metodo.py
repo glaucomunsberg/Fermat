@@ -175,7 +175,10 @@ def lru():
     x1 = solve(A,B)
     LUA= lu_factor(A)
     x2 = lu_solve(LUA,B)
-    print x2
+    table = PrettyTable()
+    table.field_names = ['x1','x2','x3','x4','x5','x6']
+    table.add_row([x2[0][0],x2[1][0],x2[2][0],x2[3][0],x2[4][0],x2[5][0]])
+    print table
 
 def cholesky():
     print '===== Cholesky ======'
@@ -187,10 +190,41 @@ def cholesky():
     f = cho_factor(A)
 
     S=cho_solve((f),B)
-    print S
+    table = PrettyTable()
+    table.field_names = ['x1','x2','x3','x4','x5','x6']
+    table.add_row([S[0][0],S[1][0],S[2][0],S[3][0],S[4][0],S[5][0]])
+    print table
+
 
 def gauss():
-    print 'GAUSS not implemented yet'
+    A = array ([[4,-1,0,-1,0,0],[-1,4,-1,0,1,0],[0,-1,4,0,0,-1],[-1,0,0,4,-1,0],[0,-1,0,-1,4,-1],[0,0,-1,0,-1,4]],float)
+    b =  array([100,0,0,100,0,0],float)
+    n,m = A.shape
+    table = PrettyTable()
+    table.field_names = ['x1','x2','x3','x4','x5']
+    C = zeros((n,m+1),float)
+    C[:,0:n],C[:,n] = A, b
+
+    for j in range(n):
+       
+        p = j 
+       
+        for i in range(j+1,n):
+            if abs(C[i,j]) > abs(C[p,j]): p = i
+        if abs(C[p,j]) < 1.0e-16:
+         
+            return b 
+      
+        C[p,:],C[j,:] = copy(C[j,:]),copy(C[p,:])
+    
+        pivot = C[j,j]
+        C[j,:] = C[j,:] / pivot
+        for i in range(n):
+            if i == j: continue
+            C[i,:] = C[i,:] - C[i,j]*C[j,:]
+    I,x = C[:,0:n],C[:,n]
+    table.add_row([x[0],x[1],x[2],x[3],x[4]])
+    print table
 
 def printM(m):                                 
   """Imprime a matriz"""

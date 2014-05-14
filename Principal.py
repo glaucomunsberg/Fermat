@@ -95,6 +95,8 @@ if __name__ == "__main__":
                 cholesky()
             elif optionMetodo == 9:
                 gauss_seidel()
+            elif optionMetodo == 10:
+                gauss()
             elif optionMetodo == 11:
                 bissecao()
                 ponto_fixo()
