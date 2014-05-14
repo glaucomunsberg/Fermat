@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import sys, time, datetime, os
 
 from Metodo import *
@@ -67,7 +69,7 @@ if __name__ == "__main__":
             print '     7  - LRU'
             print '     8  - Cholesky'
             print '     9  - Gauss-Seidel'
-            print '     10 -'
+            print '     10 - Eliminação Gaussiana'
             print ''
             print '     11 - All'
             print '     0  - Voltar'
@@ -86,7 +88,7 @@ if __name__ == "__main__":
             elif optionMetodo == 5:
                 newton_raphson()
             elif optionMetodo == 6:
-                gauss()
+                gauss_jacobi()
             elif optionMetodo == 7:
                 lru()
             elif optionMetodo == 8:
@@ -95,14 +97,16 @@ if __name__ == "__main__":
                 gauss_seidel()
             elif optionMetodo == 11:
                 bissecao()
-                onto_fixo()
+                ponto_fixo()
                 posicao_falsa()
                 secante()
                 newton_raphson()
                 gauss()
                 lru()
-                gauss_seidel()
                 cholesky()
+                gauss_seidel()
+                gauss_jacobi()
+               
             else:
                 print 'Something is wrong!'
         raw_input('Press Any key to continue')
