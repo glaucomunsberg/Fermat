@@ -113,7 +113,7 @@ def ponto_fixo():
     table.field_names = ['iterations','x','Error']
     while(e > tol and itr < maxiter):
         x = x0-(f(x0)/df(x0))     # fixed point equation
-        e = norm(x0-x) # error at the current step
+        e = norm(x0-x)            # error at the current step
         x0 = x
         table.add_row([itr,x,e])
         itr = itr + 1
@@ -124,7 +124,7 @@ def newton_raphson():
     #These choices depend on the problem being solved
     x0 = 1                      #The initial value
     tolerance = 0.0000001       #7 digit accuracy is desired
-    epsilon = 10^(-14)          #Don't want to divide by a number smaller than this
+    epsilon = 0.00000000000001  #Don't want to divide by a number smaller than this
     table = PrettyTable()
     table.field_names = ['Interations', 'Error', 'F(x n)','F(x n+1)']
     interation=0
@@ -168,9 +168,7 @@ def lru():
     print '===== Decomposição LU ======'
     A = array([[4,-1,0,-1,0,0],[-1,4,-1,0,1,0],[0,-1,4,0,0,-1],[-1,0,0,4,-1,0],[0,-1,0,-1,4,-1],[0,0,-1,0,-1,4]])
     B = array([[100],[0],[0],[100],[0],[0]])
-    #A =  array([[3.0,2,4],[1,1,2],[4,3,2]])
-    #B= array([[1],[2],[3]])
-    #print det(A)
+    
     P, L, U = lu(A)
     x1 = solve(A,B)
     LUA= lu_factor(A)
@@ -197,11 +195,12 @@ def cholesky():
 
 
 def gauss():
+    print '===== Gauss ======'
     A = array ([[4,-1,0,-1,0,0],[-1,4,-1,0,1,0],[0,-1,4,0,0,-1],[-1,0,0,4,-1,0],[0,-1,0,-1,4,-1],[0,0,-1,0,-1,4]],float)
     b =  array([100,0,0,100,0,0],float)
     n,m = A.shape
     table = PrettyTable()
-    table.field_names = ['x1','x2','x3','x4','x5']
+    table.field_names = ['x1','x2','x3','x4','x5','x6']
     C = zeros((n,m+1),float)
     C[:,0:n],C[:,n] = A, b
 
@@ -223,32 +222,32 @@ def gauss():
             if i == j: continue
             C[i,:] = C[i,:] - C[i,j]*C[j,:]
     I,x = C[:,0:n],C[:,n]
-    table.add_row([x[0],x[1],x[2],x[3],x[4]])
+    table.add_row([x[0],x[1],x[2],x[3],x[4],x[5]])
     print table
 
-def printM(m):                                 
-  """Imprime a matriz"""
-  for j in m:
-    for elem in j:
-      print "%3f" % elem,
-    print ""
-  print ""
- 
 def gauss_seidel():
   print '===== Gauss-Seidel ======'
-  mat = [[4.0,-1.0,0.0,-1.0,0.0,0.0,100],[-1.0,4.0,-1.0,0.0,-1.0,0.0,0.0],[0.0,-1.0,4.0,0.0,0.0,-1.0,0],[-1.0,0.0,0.0,4.0,-1.0,0.0,100],[0.0,-1.0,0.0,-1.0,4.0,-1.0,0],[0.0,0.0,-1.0,0.0,-1.0,4.0]]
-  x = [10,10,10,10,10,10,10] 
+  mat = [[4.0,-1.0,0.0,-1.0,0.0,0.0,100.0],[-1.0,4.0,-1.0,0.0,-1.0,0.0,0.0],[0.0,-1.0,4.0,0.0,0.0,-1.0,0.0],[-1.0,0.0,0.0,4.0,-1.0,0.0,100.0],[0.0,-1.0,0.0,-1.0,4.0,-1.0,0.0],[0.0,0.0,-1.0,0.0,-1.0,4.0,0.0]]
+  #mat = [1.0, -1.0/4.0, 0.0, -1.0/4.0, 0.0, 0.0, 25.0], [0.0, 1.0, -4.0/15.0, -1.0/15.0, -4.0/-15.0, 0.0, 20.0/3.0], [0.0, 0.0, 1.0, -1.0/56.0, -1.0/14.0, -15/56, 25.0/14.0], [0.0, 0.0, 0.0, 1.0, -60.0/209.0, -1.0/209.0, 7100.0/209.0],[0.0, 0.0, 0.0, 0.0, 1.0, -225.0/712.0, 2275.0/178.0],[0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 100.0/21.0]
+  old_x = array([0.0,0.0,0.0,0.0,0.0,0.0])
+  x = array([0.0,0.0,0.0,0.0,0.0,0.0])
+  error = 0.00001 
   table = PrettyTable()
   table.field_names = ['interations','x1','x2','x3','x4','x5','x6']
-  for t in range(20):
-    for i in range(5):
+  t = -1
+  while 1:
+    t+=1
+    for i in range(6):
       if i == 0:
         table.add_row([t,x[0],x[1],x[2],x[3],x[4],x[5]])
       algo = 0
-      for j in range(5):
+      for j in range(6):
         if j != i:
           algo = algo+ mat[i][j]*x[j]
       x[i] = ( 1/mat[i][i])*( mat[i][6]- algo)
+    if ((x[0]-old_x[0]) < error) and ((x[1]-old_x[1]) < error) and ((x[2]-old_x[2]) < error) and ((x[3]-old_x[3]) < error) and ((x[4]-old_x[4]) < error) and((x[5]-old_x[5]) < error):
+      break
+    old_x = x.copy()
   print table
 
 def gauss_jacobi():
@@ -299,18 +298,14 @@ def gauss_jacobi():
       switchh = True
       numIT += 1
     if int(numIT) > int(MaX):
-      print ">> **Impossivel** encontrar resultado em %s *iteracoes*.\n" % MaX  
       return
 
   my_cont = 0
-  
-  print "\n\n*** Regressao/Eliminação ***"
- 
+   
   for a in xrange(1, LINHAS):                     
     for b in xrange(0, COLUNAS): 
       if (int(a) != int(b)):
         if (int(mat[a][b]) != 0):
-          print ">> **Impossivel** calcular com triangular inferior *diferente de 0*\n"
           return
       elif (int(a) == int(b)):
           break
@@ -338,5 +333,3 @@ def gauss_jacobi():
 
   print table
  
-####### Fim da Regressao #########
-              
