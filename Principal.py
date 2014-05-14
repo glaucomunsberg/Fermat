@@ -1,24 +1,11 @@
 import sys, time, datetime, os
 
-from Library import Library
 from Metodo import *
 
 if __name__ == "__main__":
     firstTime = False
     os.system('clear')
-    try:
-        #Prepara o sistema de logs
-        timeNow     = time.time()
-        nomelog     = datetime.datetime.fromtimestamp(timeNow).strftime('%Y-%m-%d')
-        horaSessao  = datetime.datetime.fromtimestamp(timeNow).strftime('%H:%M:%S')
-        log = open('logs/'+nomelog+'.log', 'a')
-        log.write('\n\n=====================Session Inition=====================n')
-        log.write('Hora: '+horaSessao+'\n')
-        log.write('System Libraries OK\n')
-        log.write('System Log OK\n')
-    except Exception, msg:
-        print 'Error: '+str(msg)
-
+    
     optionMenu = False
     while(optionMenu == False):
         
@@ -38,17 +25,14 @@ if __name__ == "__main__":
             except Exception,msg:
                 log.write('Principal: Error: '+str(msg))
 
-        lib = Library(log)
-        
         if option == 1:    
             try:
                 print lib.readFile(raw_input('Type the path to your file: '))
             except Exception, msg:
-                log.write('Error: '+str(msg)+'\n')
                 print 'Error: '+str(msg)
                 exit(1)
         elif option == 2:
-            lib.setFromMatrix([[4.0,-1.0,0.0,-1.0,0.0,0.0],[-1.0,4.0,-1.0,0.0,-1.0,0.0],[0.0,-1.0,4.0,0.0,0.0,-1.0],[-1.0,0.0,0.0,4.0,-1.0,0.0],[0.0,-1.0,0.0,-1.0,4.0,-1.0],[0.0,0.0,-1.0,0.0,-1.0,4.0]])
+            matrix=[[4.0,-1.0,0.0,-1.0,0.0,0.0],[-1.0,4.0,-1.0,0.0,-1.0,0.0],[0.0,-1.0,4.0,0.0,0.0,-1.0],[-1.0,0.0,0.0,4.0,-1.0,0.0],[0.0,-1.0,0.0,-1.0,4.0,-1.0],[0.0,0.0,-1.0,0.0,-1.0,4.0]]
             
         elif option == 3:
             print 'Biblioteca desenvolvida para solucionaro o problema'
@@ -67,7 +51,6 @@ if __name__ == "__main__":
             print 'Something is wrong. \n  \'Cause you type a wrong digit on you keyboard'
             exit()
 
-        log.flush()
 
         if option == 1 or option == 2:
             os.system('clear')

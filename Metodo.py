@@ -1,9 +1,14 @@
-from Auxiliar import Auxiliar
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#from Auxiliar import Auxiliar
 import numpy
 from numpy import *
 import scipy 
 from scipy import *
 from prettytable import *
+from numpy import *
+from scipy.linalg import *
+from numpy.testing import *
 
 #Methods codes
 #euler constant
