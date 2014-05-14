@@ -56,9 +56,9 @@ if __name__ == "__main__":
 
         if option == 1 or option == 2:
             os.system('clear')
-            print '================Metodos Possiveis==============='
+            print '================Metodos Possíveis==============='
             print ' Zero de Funcoes'
-            print '     1  - Bisscao'
+            print '     1  - Bisseção'
             print '     2  - Fixed Point'
             print '     3  - Posicao Falsa'
             print '     4  - Secante'

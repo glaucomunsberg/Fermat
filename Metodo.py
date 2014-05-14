@@ -192,7 +192,7 @@ def cholesky():
 def gauss():
     print 'GAUSS not implemented yet'
 
-def printM(m):                                 ##printM() imprime uma matriz na tela
+def printM(m):                                 
   """Imprime a matriz"""
   for j in m:
     for elem in j:
@@ -200,24 +200,22 @@ def printM(m):                                 ##printM() imprime uma matriz na 
     print ""
   print ""
  
-##### Inicio da funcao que aplica os metodos  ######
 def gauss_seidel():
   print '===== Gauss-Seidel ======'
   mat = [[4.0,-1.0,0.0,-1.0,0.0,0.0,100],[-1.0,4.0,-1.0,0.0,-1.0,0.0,0.0],[0.0,-1.0,4.0,0.0,0.0,-1.0,0],[-1.0,0.0,0.0,4.0,-1.0,0.0,100],[0.0,-1.0,0.0,-1.0,4.0,-1.0,0],[0.0,0.0,-1.0,0.0,-1.0,4.0]]
-  #mat = [1.0, -1.0/4.0, 0.0, -1.0/4.0, 0.0, 0.0, 25.0], [0.0, 1.0, -4.0/15.0, -1.0/15.0, -4.0/-15.0, 0.0, 20.0/3.0], [0.0, 0.0, 1.0, -1.0/56.0, -1.0/14.0, -15/56, 25.0/14.0], [0.0, 0.0, 0.0, 1.0, -60.0/209.0, -1.0/209.0, 7100.0/209.0],[0.0, 0.0, 0.0, 0.0, 1.0, -225.0/712.0, 2275.0/178.0],[0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 100.0/21.0]
-  #mat = [[4.0,-1.0,0.0,-1.0,0.0,0.0,25.0],[-1.0,4.0,-1.0,0.0,-1.0,0.0,20.0/3.0],[0.0,-1.0,4.0,0.0,0.0,-1.0,25.0/14.0],[-1.0,0.0,0.0,4.0,-1.0,0.0,7100.0/209.0],[0.0,-1.0,0.0,-1.0,4.0,-1.0,2275.0/178.0],[0.0,0.0,-1.0,0.0,-1.0,4.0,100.0/21.0]] 
-  x = [10,10,10,10,10,10,10] #initial guess
-
+  x = [10,10,10,10,10,10,10] 
+  table = PrettyTable()
+  table.field_names = ['interations','x1','x2','x3','x4','x5','x6']
   for t in range(20):
     for i in range(5):
-      print i
+      if i == 0:
+        table.add_row([t,x[0],x[1],x[2],x[3],x[4],x[5]])
       algo = 0
       for j in range(5):
         if j != i:
           algo = algo+ mat[i][j]*x[j]
       x[i] = ( 1/mat[i][i])*( mat[i][6]- algo)
-      print x
-
+  print table
 
 def gauss_jacobi():
   print '===== Gauss-Jacobi ======'
@@ -227,26 +225,25 @@ def gauss_jacobi():
   COLUNAS = 0
   numIT = 1                  
   switchh = False  
- 
-##### Aplica o metodo Gauss-Jacobi ######
+  table = PrettyTable()
+  table.field_names = ["Interations", 'x1','x2','x3','x4','x5','x6']
+
  
   LINHAS = len(mat)                              ## numero de linhas
   for C in mat[0]:
     COLUNAS += 1                                 ## numero de colunas
- 
-  print ">> Dimensao da Matriz: [%d][%d]\n" %(LINHAS, COLUNAS)  ## Imprime numero de Linhas X Colunas
- 
-  ###### Primeira iteracao ######
-  B = list(zip(*mat)[-1])                        ## B[] Vetor que guarda a ultima coluna da matriz
-  X0 = [B[i]/mat[i][i] for i in xrange(LINHAS)]  ## Guarda o result de X[i]= b1/a11 , X[i]=b2/a22 etc..
-  X1 = list(X0)                                  ## X1(atual) = X0(anterior)
- 
-  ###### Segunda iteracao em diante.. ######
+
+  B = list(zip(*mat)[-1])                       
+  X0 = [B[i]/mat[i][i] for i in xrange(LINHAS)]
+  X1 = list(X0)    
+  interation=0
   numIT += 1                  
   while not switchh:
     sup = 0
     div = 0
- 
+    if interation != 6:
+      table.add_row([interation,X0[0],X0[1],X0[2],X0[3],X0[4],X0[5]])
+    interation+=1
     for i in xrange(LINHAS):
       X1[i] = B[i]
       for j in xrange(COLUNAS-1):
@@ -270,24 +267,13 @@ def gauss_jacobi():
     if int(numIT) > int(MaX):
       print ">> **Impossivel** encontrar resultado em %s *iteracoes*.\n" % MaX  
       return
-  
-  printM(mat)                                      ## Imprime MAT
+
   my_cont = 0
-  print "*** GauSS-JaCoBi ***"
-  for i in X0:                                     ## Imprime  X, resultados de gauss-jacobi
-    print "X%d = %f" % ((my_cont+1), i)
-    my_cont += 1
-  print "\n>> Numero de iteracoes: %d " % numIT
-  print ">> Valor do erro: %s" % ErroR
- 
-####### Fim do Gauss-Jacobi #########
- 
-####### Inicio da Regrecao  #########
- 
+  
   print "\n\n*** Regressao/Eliminação ***"
  
-  for a in xrange(1, LINHAS):                      ## Checar a a triangular inferior esta zerada,
-    for b in xrange(0, COLUNAS):                 ## se nao estiver nao calcula regressao/elim
+  for a in xrange(1, LINHAS):                     
+    for b in xrange(0, COLUNAS): 
       if (int(a) != int(b)):
         if (int(mat[a][b]) != 0):
           print ">> **Impossivel** calcular com triangular inferior *diferente de 0*\n"
@@ -315,12 +301,8 @@ def gauss_jacobi():
       switchh = True
     i -= 1
     j = i
- 
-  my_cont = 0
-  for i in B:                                 ## Imprime B, vetor que guarda resultados da regressao/elim
-    print "B%d = %f" % ((my_cont+1), i)
-    my_cont += 1
- 
+
+  print table
  
 ####### Fim da Regressao #########
               
