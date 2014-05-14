@@ -1,5 +1,8 @@
 from Auxiliar import Auxiliar
-from numpy.linalg import norm
+import numpy
+from numpy import *
+import scipy 
+from scipy import *
 from prettytable import *
 
 #Methods codes
@@ -155,4 +158,43 @@ def secante():
         x1 = x2
         interation+=1
     print table
+
+def lru():
+    print 'LRU'
+    A = array([[4,-1,0,-1,0,0],[-1,4,-1,0,1,0],[0,-1,4,0,0,-1],[-1,0,0,4,-1,0],[0,-1,0,-1,4,-1],[0,0,-1,0,-1,4]])
+    B = array([[100],[0],[0],[100],[0],[0]])
+    #A =  array([[3.0,2,4],[1,1,2],[4,3,2]])
+    #B= array([[1],[2],[3]])
+    #print det(A)
+    P, L, U = lu(A)
+    print L
+    print U
+    x1 = solve(A,B)
+    LUA= lu_factor(A)
+    print LUA
+    x2 = lu_solve(LUA,B)
+    print x2
+
+def cholesky():
+    A= array([[4,-1,0,-1,0,0],[-1,4,-1,0,1,0],[0,-1,4,0,0,-1],[-1,0,0,4,-1,0],[0,-1,0,-1,4,-1],[0,0,-1,0,-1,4]])
+    L = scipy.linalg.cholesky(A, lower=True)
+    U = scipy.linalg.cholesky(A, lower=False)
+
+    B = scipy.array([[100],[0],[0],[100],[0],[0]])
+    f = cho_factor(A)
+    print f
+    print "A:"
+    print A
+
+    print "L:"
+    print L
+
+    print "U:"
+    print U
+    S=cho_solve((f),B)
+    print S
+
+def gauss():
+    print 'GAUSS not implemented yet'
+
               

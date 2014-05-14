@@ -73,18 +73,22 @@ if __name__ == "__main__":
             os.system('clear')
             print '================Metodos Possiveis==============='
             print ' Zero de Funcoes'
-            print '     1 - Bisscao'
-            print '     2 - Ponto Fixo'
-            print '     3 - Posicao Falsa'
-            print '     4 - Secante'
-            print '     5 - Newton Raphson'
+            print '     1  - Bisscao'
+            print '     2  - Fixed Point'
+            print '     3  - Posicao Falsa'
+            print '     4  - Secante'
+            print '     5  - Newton Raphson'
             print ''
             print ' Sistemas'
-            print  '    6 - '
+            print '     6  - Gauss'
+            print '     7  - LRU'
+            print '     8  - Cholesky'
+            print '     9  - '
+            print '     10 -'
             print ''
-            print '     10 - All'
-            print '     0 - Voltar'
-            optionMetodo = raw_input('Your Option: ')
+            print '     11 - All'
+            print '     0  - Voltar'
+            optionMetodo = int(raw_input('Your Option: '))
             
             if optionMetodo == 0:
                 os.system('clear')
@@ -98,12 +102,21 @@ if __name__ == "__main__":
                 secante()
             elif optionMetodo == 5:
                 newton_raphson()
-            elif optionMetodo == 10:
+            elif optionMetodo == 6:
+                gauss()
+            elif optionMetodo == 7:
+                lru()
+            elif optionMetodo == 8:
+                cholesky()
+            elif optionMetodo == 11:
                 bissecao()
                 onto_fixo()
                 posicao_falsa()
                 secante()
                 newton_raphson()
+                gauss()
+                lru()
+                cholesky()
             else:
                 print 'Something is wrong!'
         raw_input('Press Any key to continue')
