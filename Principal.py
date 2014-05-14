@@ -63,10 +63,10 @@ if __name__ == "__main__":
             print '     5  - Newton Raphson'
             print ''
             print ' Sistemas'
-            print '     6  - Gauss'
+            print '     6  - Gauss-Jacobi'
             print '     7  - LRU'
             print '     8  - Cholesky'
-            print '     9  - '
+            print '     9  - Gauss-Seidel'
             print '     10 -'
             print ''
             print '     11 - All'
@@ -91,6 +91,8 @@ if __name__ == "__main__":
                 lru()
             elif optionMetodo == 8:
                 cholesky()
+            elif optionMetodo == 9:
+                gauss_seidel()
             elif optionMetodo == 11:
                 bissecao()
                 onto_fixo()
@@ -99,6 +101,7 @@ if __name__ == "__main__":
                 newton_raphson()
                 gauss()
                 lru()
+                gauss_seidel()
                 cholesky()
             else:
                 print 'Something is wrong!'
