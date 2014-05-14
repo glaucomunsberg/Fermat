@@ -197,4 +197,117 @@ def cholesky():
 def gauss():
     print 'GAUSS not implemented yet'
 
+def printM(m):                                 ##printM() imprime uma matriz na tela
+  """Imprime a matriz"""
+  for j in m:
+    for elem in j:
+      print "%3f" % elem,
+    print ""
+  print ""
+ 
+##### Inicio da funcao que aplica os metodos  ######
+ 
+def gauss_jacobi():
+  mat = [1.0, -1.0/4.0, 0.0, -1.0/4.0, 0.0, 0.0, 25.0], [0.0, 1.0, -4.0/15.0, -1.0/15.0, -4.0/-15.0, 0.0, 20.0/3.0], [0.0, 0.0, 1.0, -1.0/56.0, -1.0/14.0, -15/56, 25.0/14.0], [0.0, 0.0, 0.0, 1.0, -60.0/209.0, -1.0/209.0, 7100.0/209.0],[0.0, 0.0, 0.0, 0.0, 1.0, -225.0/712.0, 2275.0/178.0],[0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 100.0/21.0]
+  MaX = 500
+  ErroR = 0.0000001
+  COLUNAS = 0
+  numIT = 1                  
+  switchh = False  
+ 
+##### Aplica o metodo Gauss-Jacobi ######
+ 
+  LINHAS = len(mat)                              ## numero de linhas
+  for C in mat[0]:
+    COLUNAS += 1                                 ## numero de colunas
+ 
+  print ">> Dimensao da Matriz: [%d][%d]\n" %(LINHAS, COLUNAS)  ## Imprime numero de Linhas X Colunas
+ 
+  ###### Primeira iteracao ######
+  B = list(zip(*mat)[-1])                        ## B[] Vetor que guarda a ultima coluna da matriz
+  X0 = [B[i]/mat[i][i] for i in xrange(LINHAS)]  ## Guarda o result de X[i]= b1/a11 , X[i]=b2/a22 etc..
+  X1 = list(X0)                                  ## X1(atual) = X0(anterior)
+ 
+  ###### Segunda iteracao em diante.. ######
+  numIT += 1                  
+  while not switchh:
+    sup = 0
+    div = 0
+ 
+    for i in xrange(LINHAS):
+      X1[i] = B[i]
+      for j in xrange(COLUNAS-1):
+        if ( i != j):
+          X1[i]=  (X1[i] - (mat[i][j] * X0[j]))
+      X1[i] =  (1/mat[i][i] * X1[i])
+      aux = X1[i] - X0[i]
+      if (aux < 0) :
+        aux = aux * -1
+      aux2 = X1[i]
+      if (aux2 < 0):
+        aux2 = aux2 * -1
+      if (aux > sup):
+        sup = aux
+      if (aux2 > div):
+        div = aux2
+    X0 = list(X1)
+    if (sup / div) <= ErroR:
+      switchh = True
+      numIT += 1
+    if int(numIT) > int(MaX):
+      print ">> **Impossivel** encontrar resultado em %s *iteracoes*.\n" % MaX  
+      return
+  
+  printM(mat)                                      ## Imprime MAT
+  my_cont = 0
+  print "*** GauSS-JaCoBi ***"
+  for i in X0:                                     ## Imprime  X, resultados de gauss-jacobi
+    print "X%d = %f" % ((my_cont+1), i)
+    my_cont += 1
+  print "\n>> Numero de iteracoes: %d " % numIT
+  print ">> Valor do erro: %s" % ErroR
+ 
+####### Fim do Gauss-Jacobi #########
+ 
+####### Inicio da Regrecao  #########
+ 
+  print "\n\n*** Regressao/Eliminação ***"
+ 
+  for a in xrange(1, LINHAS):                      ## Checar a a triangular inferior esta zerada,
+    for b in xrange(0, COLUNAS):                 ## se nao estiver nao calcula regressao/elim
+      if (int(a) != int(b)):
+        if (int(mat[a][b]) != 0):
+          print ">> **Impossivel** calcular com triangular inferior *diferente de 0*\n"
+          return
+      elif (int(a) == int(b)):
+          break
+         
+  switchh = False
+  i = LINHAS-1
+  j = i
+  B[j] = B[j] / mat[i][j]
+  i -= 1
+  j = i
+  t = 0
+  numIT = 1
+  COLUNAS -= 1
+ 
+  while not (switchh):
+    div = 0
+    numIT += 1
+    for t in xrange(j+1, COLUNAS):
+      div = div + (mat[i][t] * B[t])
+    B[j] = (B[j] - div) / mat[i][j]
+    if int(i) == 0:
+      switchh = True
+    i -= 1
+    j = i
+ 
+  my_cont = 0
+  for i in B:                                 ## Imprime B, vetor que guarda resultados da regressao/elim
+    print "B%d = %f" % ((my_cont+1), i)
+    my_cont += 1
+ 
+ 
+####### Fim da Regressao #########
               
